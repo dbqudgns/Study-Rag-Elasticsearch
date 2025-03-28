@@ -1,4 +1,4 @@
-# devyummi_qna.json 파일을 읽고 Elasticsearch 인덱스 저장소(qna_sparse)에 인덱싱을 수행 해 데이터를 저장
+# devyummi_qna.json 파일을 읽고 Elasticsearch 인덱스 저장소(qna_sparse)에 인덱싱을 수행해 데이터를 저장
 import requests # Elasticsearch와의 통신을 위한 HTTP 요청 라이브러리
 import json # JSON 파일을 다루는 라이브러리
 import time # 시간 관련 기능을 제공하는 라이브러리 (sleep 사용)
