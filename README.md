@@ -98,7 +98,8 @@ RAG-Practice
 
 - API : Chat-GPT(gpt-4o-mini)
 
-Elasticsearch는 리눅스 환경에서만 실행될 수 있기 때문에 Window 11 환경에서 WSL2를 기반으로 Ubuntu 환경에서 실행
+Elasticsearch는 리눅스 환경에서 실행되므로 Windows 11에서 WSL2를 이용해 Ubuntu 환경에서 학습을 진행하였습니다.
+
 
 
 
