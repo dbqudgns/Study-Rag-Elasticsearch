@@ -1,5 +1,5 @@
 # FastAPI를 사용하여 웹 API 진행
-# Elasticsearch의 Sparse 검색 결과를 기반으로 LLM(GPT)에게게 요청하여 향상된 응답 생성하기
+# Elasticsearch의 Sparse 검색 결과를 기반으로 LLM(GPT)에게 요청하여 향상된 응답 생성하기
 
 import os  # 환경 변수(API 키) 관리
 import requests # Elasticsearch와의 통신을 위한 HTTP 요청
