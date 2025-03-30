@@ -15,11 +15,19 @@ BaseModel : 자동 데이터 유효성 검사 class를 만들 수 있는 모듈
 from openai import OpenAI #openai에서 OpenAI 모듈을 가져와 OpenAI API를 사용
 from dotenv import load_dotenv #dotenv에서 load_dotenv 모듈을 가져와 .env 파일에서 환경 변수를 불러옴 
 
-# .env 파일 로드 : 현재 작업 진행 중인 디렉토리에서 불러옴
-load_dotenv()
+# 부모 디렉토리에 있는 .env 파일의 경로 지정
+dotenv_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), ".env")
+'''
+os.path.abspath(__file__) : 현재 실행 중인 파일의 절대 경로를 가져옴
+os.path.dirname() : 해당 함수를 두번 사용하여 부모 디렉토리로 이동
+os.path.join(..., ".env") : 부모 디렉토리에 있는 .env 파일의 절대 경로를 가져옴
+'''
+
+# .env 파일 로드 
+load_dotenv(dotenv_path)
 
 # 환경 변수 확인
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY") # .env 파일에서 "OPENAO_API_KEY" 키를 통해 GPT 키값을 불러온다. 
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY") # .env 파일에서 "OPENAI_API_KEY" 키를 통해 GPT 키 값을 불러온다. 
 
 app = FastAPI() # FastAPI()를 사용하여 API 서버를 생성한다. 
 llmClient = OpenAI(api_key=OPENAI_API_KEY) #OpenAI GPT 모델을 사용할 준비 
@@ -27,21 +35,6 @@ llmClient = OpenAI(api_key=OPENAI_API_KEY) #OpenAI GPT 모델을 사용할 준�
 # API에서 사용할 데이터 모델 정의 
 class QueryRequest(BaseModel): # QueryRequest 클래스는 API가 받을 요청 형식을 BaseModel을 통해 정의
     query: str # query의 데이터 타입은 str(문자열)로 지정 
-
-# 기본 LLM 응답 API
-@app.post("/query")
-async def handle_query(request: QueryRequest): # QueryRequest을 통해 사용자의 요청인 request을 검증
-    try:
-        response = llmClient.chat.completions.create( # GPT한테 보낼 요청 JSON 형식
-            model="gpt-4o-mini",
-            messages=[
-                {"role": "system", "content": "사용자의 질문에 대해 답변을 해주세요."},
-                {"role": "user", "content": request.query} # query에 질문이 있음 
-            ]
-        )
-        return {"answer": response.choices[0].message.content} # GPT가 생성한 응답을 반환 
-    except Exception as e: 
-        raise HTTPException(status_code=500, detail=str(e)) # 만약 오류가 발생하면 500 에러(서버 오류) 처리
 
 # Elasticsearch 검색 후 LLM에게 요청하는 API 만들기 
 @app.post("/query_rag")
@@ -57,7 +50,6 @@ async def handle_query_rag(request: QueryRequest):
         }
         
         elastic_response = requests.post("http://아이피:9200/qna_sparse/_search", json=body_data) # Elasticsearch에게 요청을 보냄
-        elastic_response.raise_for_status()  # Elasticsearch에게 보낸 요청이 정상적으로 처리되지 않는 경우 에러를 발생
         
         elastic_data = elastic_response.json() # 검색 결과를 받아옴
 
