@@ -146,7 +146,7 @@ RAG-Practice
   │-- sparse_rag_api.py # Sparse 검색 결과를 기반으로 LLM(GPT)를 활용한 응답 생성
 devyummi_qna.json # Q&A 구조의 JSON 파일
 devyummi_qna_vector.json # Question을 벡터화 시킨 JSON 파일
-llm_api.py # 기본 LLM 응답 생
+llm_api.py # 기본 LLM 응답 생성
 ```
 
 ---
