@@ -108,20 +108,19 @@ RAG에서는 문서 검색을 위해 Elasticsearch를 활용할 수 있으며 �
 => Elasticsearch 인덱스 매핑
 ```
 {
-  "mappings": { => 문서를 저장할 때 각 필드의 타입과 분석 방법을 정의
+  "mappings": { # 문서를 저장할 때 각 필드의 타입과 분석 방법을 정의
     "properties": {
       "Vector": { 
-       "type": "dense_vector", =>밀집 벡터(dense_vector) : 딥러닝 기반의 유사도 검색 진행
-       "dims": 1536,
-=>벡터의 차원 수(OpenAI text-embedding-3-small 모델은 1536차원 벡터를 생성)
-       "index": true, => Vector 데이터 인덱싱 진행
-       "similarity": "l2_norm" => 벡터 간 유사도 측정 방식 (L2 Norm, 유클리드 거리)
+       "type": "dense_vector", # 밀집 벡터(dense_vector) : 딥러닝 기반의 유사도 검색 진행
+       "dims": 1536, # 벡터의 차원 수(OpenAI text-embedding-3-small 모델은 1536차원 벡터를 생성)
+       "index": true, # Vector 데이터 인덱싱 진행
+       "similarity": "l2_norm" # 벡터 간 유사도 측정 방식 (L2 Norm, 유클리드 거리)
       },
-      "Question": { => 검색 시 사용하지 않음
+      "Question": { # 검색 시 사용하지 않음
         "type": "text",
         "index": false
       },
-      "Answer": { => 검색 시 사용하지 않음
+      "Answer": { # 검색 시 사용하지 않음
         "type": "text",
         "index": false
       }
